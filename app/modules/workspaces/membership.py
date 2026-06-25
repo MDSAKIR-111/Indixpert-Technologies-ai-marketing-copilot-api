@@ -8,7 +8,6 @@ from app.core.db.base import Base
 
 
 class WorkspaceMember(Base):
-
     __tablename__ = "workspace_members"
 
     workspace_id: Mapped[uuid.UUID] = mapped_column(
@@ -21,4 +20,6 @@ class WorkspaceMember(Base):
         primary_key=True,
     )
 
-    role: Mapped[str] = mapped_column(default="owner")
+    role: Mapped[str] = mapped_column(
+        default="owner"
+    )

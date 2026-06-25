@@ -1,16 +1,26 @@
 import datetime
+import uuid
 
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
+from sqlalchemy.dialects.postgresql import UUID
 
 from app.core.db.base import Base
-from app.core.db.mixins import UUIDMixin
 
 
-class User(UUIDMixin, Base):
+class User(Base):
     __tablename__ = "users"
 
-    email: Mapped[str] = mapped_column(unique=True)
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+
+    email: Mapped[str] = mapped_column(
+        unique=True,
+        nullable=False,
+    )
 
     full_name: Mapped[str | None]
 

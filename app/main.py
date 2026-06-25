@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from sqlalchemy import text
+from app.v1.call_all_route import api_router
 
 from app.core.db.session import engine
 
 app = FastAPI()
 
+app.include_router(api_router)
 
 @app.get("/health")
 async def health():
