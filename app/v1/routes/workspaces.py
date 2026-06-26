@@ -5,7 +5,7 @@ from app.modules.workspaces.service import create_workspace
 from app.modules.auth.dependencies import get_current_user
 from app.core.db.dependencies import get_db
 
-router = APIRouter()
+
 router = APIRouter(
     prefix="/workspace",
     tags=["Workspace"]

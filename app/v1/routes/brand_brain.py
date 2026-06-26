@@ -1,13 +1,18 @@
+from uuid import UUID
 from fastapi import APIRouter, Depends
 
 from app.core.db.dependencies import get_db
 
 from app.modules.brand_brain.schemas import (
-    BrandKnowledgeCreate
+    BrandKnowledgeCreate,
+    BrandKnowledgeUpdate
 )
 
 from app.modules.brand_brain.service import (
-    create_brand_knowledge
+    create_brand_knowledge,
+    get_brand_knowledge,
+    update_brand_knowledge,
+    delete_brand_knowledge,
 )
 
 router = APIRouter(
@@ -29,3 +34,38 @@ async def create_brand_brain(
     return {
         "knowledge_id": str(knowledge_id)
     }
+
+
+@router.get("/{brand_id}")
+async def get_brand_brain(
+    brand_id: UUID,
+    session=Depends(get_db),
+):
+    return await get_brand_knowledge(
+        session=session,
+        brand_id=brand_id
+    )
+
+
+@router.put("/{brand_id}")
+async def update_brand_brain(
+    brand_id: UUID,
+    payload: BrandKnowledgeUpdate,
+    session=Depends(get_db),
+):
+    return await update_brand_knowledge(
+        session=session,
+        brand_id=brand_id,
+        payload=payload
+    )
+
+
+@router.delete("/{brand_id}")
+async def delete_brand_brain(
+    brand_id: UUID,
+    session=Depends(get_db),
+):
+    return await delete_brand_knowledge(
+        session=session,
+        brand_id=brand_id
+    )

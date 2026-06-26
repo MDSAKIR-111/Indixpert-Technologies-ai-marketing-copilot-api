@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from sqlalchemy import text
 from app.v1.call_all_route import api_router
+import asyncio
 
+from app.capability.ai_gateway.gemini import generate_content
 from app.core.db.session import engine
 
 app = FastAPI()
@@ -25,3 +27,5 @@ async def db_check():
         "database": "connected",
         "result": result.scalar()
     }
+
+

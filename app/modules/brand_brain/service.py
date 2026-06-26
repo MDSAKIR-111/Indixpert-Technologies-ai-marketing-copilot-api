@@ -18,3 +18,49 @@ async def create_brand_knowledge(
             "p_ai_instructions": payload.ai_instructions,
         }
     )
+
+
+async def get_brand_knowledge(
+    session,
+    brand_id,
+):
+    return await SPService.one(
+        session=session,
+        procedure_name="sp_get_brand_context",
+        params={
+            "p_brand_id": brand_id
+        }
+    )
+
+
+async def update_brand_knowledge(
+    session,
+    brand_id,
+    payload,
+):
+    return await SPService.write(
+        session=session,
+        procedure_name="sp_update_brand_knowledge",
+        params={
+            "p_brand_id": brand_id,
+            "p_company_description": payload.company_description,
+            "p_target_audience": payload.target_audience,
+            "p_products_services": payload.products_services,
+            "p_brand_voice": payload.brand_voice,
+            "p_competitors": payload.competitors,
+            "p_ai_instructions": payload.ai_instructions,
+        }
+    )
+
+
+async def delete_brand_knowledge(
+    session,
+    brand_id,
+):
+    return await SPService.write(
+        session=session,
+        procedure_name="sp_delete_brand_knowledge",
+        params={
+            "p_brand_id": brand_id
+        }
+    )

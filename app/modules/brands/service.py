@@ -73,23 +73,3 @@ async def delete_brand(
         }
     )
 
-
-# from app.core.db.base_service import SPService
-
-
-# async def create_brand(
-#     session,
-#     workspace_id,
-#     payload,
-# ):
-#     return await SPService.run(
-#         session=session,
-#         procedure_name="sp_create_brand",
-#         params={
-#             "p_workspace_id": workspace_id,
-#             "p_name": payload.name,
-#             "p_website": payload.website,
-#             "p_industry": payload.industry,
-#         }
-#     )
-

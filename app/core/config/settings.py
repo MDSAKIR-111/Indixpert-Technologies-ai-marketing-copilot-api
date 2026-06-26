@@ -11,6 +11,8 @@ class Settings(BaseSettings):
 
     environment: str
 
+    GEMINI_API_KEY: str
+
     class Config:
         env_file = ".env"
 

@@ -8,7 +8,7 @@ async def get_current_user(
     session=Depends(get_db),
 ):
 
-    email = "microsoft123@gmail.com"
+    email = "jane.doe@example.com"
 
     user = await get_user_workspace(
         session=session,

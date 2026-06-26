@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from app.core.db.dependencies import get_db
 
 from app.modules.brands.schemas import BrandCreate,BrandUpdate
-from app.modules.brands.service import create_brand
+
 
 from app.modules.auth.current_workspace import (
     get_current_workspace
@@ -15,6 +15,7 @@ from app.modules.brands.service import (
     update_brand,
     delete_brand,   
 )
+
 router = APIRouter(
     prefix="/brands",
     tags=["Brands"]
