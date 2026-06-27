@@ -1,4 +1,5 @@
 from uuid import UUID
+
 from fastapi import APIRouter, Depends
 
 from app.core.db.dependencies import get_db
@@ -6,7 +7,6 @@ from app.modules.content_generation.ai_service import (
     ContentGenerationAIService
 )
 from app.modules.content_generation.schemas import (
-    GeneratedContentCreate,
     GenerateContentRequest,
     RegenerateContentRequest,
     GeneratedContentUpdate,
@@ -27,7 +27,15 @@ router = APIRouter(
 )
 
 
-
+@router.post("/generate")
+async def generate_content(
+    payload: GenerateContentRequest,
+    session=Depends(get_db)
+):
+    return await ContentGenerationAIService.generate(
+        session,
+        payload
+    )
 
 
 @router.get("/{content_id}")
@@ -51,26 +59,10 @@ async def list_generated_content(
         brand_id
     )
 
-@router.post("/generate")
-async def generate_content(
-    payload: GenerateContentRequest,
-    session=Depends(get_db)
-):
-    return await ContentGenerationAIService.generate(
-        session,
-        payload
-    )
 
 
-@router.get("/{content_id}/versions")
-async def get_versions(
-    content_id: UUID,
-    session=Depends(get_db)
-):
-    return await ContentGenerationService.get_versions(
-        session,
-        content_id
-    )
+
+
 
 @router.post("/{content_id}/regenerate")
 async def regenerate_content(
@@ -106,4 +98,15 @@ async def edit_content(
         session=session,
         content_id=content_id,
         instruction=payload.instruction,
+    )
+
+
+@router.get("/{content_id}/versions")
+async def get_versions(
+    content_id: UUID,
+    session=Depends(get_db)
+):
+    return await ContentGenerationService.get_versions(
+        session,
+        content_id
     )

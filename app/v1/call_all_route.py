@@ -16,6 +16,14 @@ from app.v1.routes.content_calendar import (
 from app.v1.routes.content_generation import (
     router as content_generation_router
 )
+from app.v1.routes.social_accounts import (
+    router as social_accounts_router
+)
+from app.v1.routes.publisher import (
+    router as social_publish_router
+)
+
+
 
 api_router = APIRouter()
 
@@ -33,3 +41,5 @@ api_router.include_router(
 api_router.include_router(
     content_generation_router
 )
+api_router.include_router(social_accounts_router)
+api_router.include_router(social_publish_router)

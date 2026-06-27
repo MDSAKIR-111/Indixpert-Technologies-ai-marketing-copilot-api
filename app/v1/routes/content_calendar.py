@@ -14,7 +14,6 @@ router = APIRouter(
     prefix="/content-calendar",
     tags=["Content Calendar"]
 )
-
 @router.post("/")
 async def create_content_calendar(
     payload: ContentCalendarCreate,

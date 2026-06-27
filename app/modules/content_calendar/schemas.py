@@ -1,34 +1,25 @@
 from uuid import UUID
-from datetime import date
-from pydantic import BaseModel
-
-
-class ContentCalendarCreate(BaseModel):
-    brand_id: UUID
-    title: str
-    content_type: str
-    platform: str
-    scheduled_date: date
-
-
-from datetime import date
+from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
 
 
+class ContentCalendarCreate(BaseModel):
+    generated_content_id: UUID
+    scheduled_datetime: datetime
+
+
 class ContentCalendarUpdate(BaseModel):
-    title: str
-    content_type: str
-    platform: str
-    scheduled_date: date
-    status: Optional[str] = "draft"
+    scheduled_datetime: datetime
+    status: Optional[str] = "scheduled"
 
 
 class ContentCalendarResponse(BaseModel):
     id: UUID
+    generated_content_id: UUID
     brand_id: UUID
     title: str
     content_type: str
     platform: str
-    scheduled_date: date
+    scheduled_datetime: datetime
     status: str

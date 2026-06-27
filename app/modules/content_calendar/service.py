@@ -6,15 +6,28 @@ class ContentCalendarService:
     @staticmethod
     async def create(session, payload):
 
+
+        content = await SPService.one(
+            session=session,
+            procedure_name="sp_get_generated_content",
+            params={
+                "p_id": payload.generated_content_id
+            }
+        )
+
+        if not content:
+            raise Exception("Generated content not found.")
+
         return await SPService.write(
             session=session,
             procedure_name="sp_create_content_calendar",
             params={
-                "p_brand_id": payload.brand_id,
-                "p_title": payload.title,
-                "p_content_type": payload.content_type,
-                "p_platform": payload.platform,
-                "p_scheduled_date": payload.scheduled_date,
+                "p_generated_content_id": payload.generated_content_id,
+                "p_brand_id": content["brand_id"],
+                "p_title": content["content_type"],
+                "p_content_type": content["content_type"],
+                "p_platform": content["platform"],
+                "p_scheduled_datetime": payload.scheduled_datetime,
             },
         )
 
@@ -40,18 +53,29 @@ class ContentCalendarService:
     @staticmethod
     async def update(session, calendar_id, payload):
 
+        calendar = await SPService.one(
+            session=session,
+            procedure_name="sp_get_content_calendar",
+            params={
+                "p_id": calendar_id
+            }
+        )
+
+        if not calendar:
+            raise Exception("Calendar entry not found.")
+
         return await SPService.write(
             session=session,
             procedure_name="sp_update_content_calendar",
             params={
-                "p_id": calendar_id,
-                "p_title": payload.title,
-                "p_content_type": payload.content_type,
-                "p_platform": payload.platform,
-                "p_scheduled_date": payload.scheduled_date,
-                "p_status": payload.status,
-            },
-        )
+            "p_id": calendar_id,
+            "p_title": calendar["title"],
+            "p_content_type": calendar["content_type"],
+            "p_platform": calendar["platform"],
+            "p_scheduled_datetime": payload.scheduled_datetime,
+            "p_status": payload.status,
+        },
+    )
 
     @staticmethod
     async def delete(session, calendar_id):

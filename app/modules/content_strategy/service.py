@@ -17,3 +17,16 @@ async def create_content_strategy(
             "p_platforms": payload.platforms,
         }
     )
+
+
+async def get_strategy(
+    session,
+    brand_id,
+):
+    return await SPService.one(
+        session=session,
+        procedure_name="sp_get_content_strategy",
+        params={
+            "p_brand_id": brand_id,
+        }
+    )

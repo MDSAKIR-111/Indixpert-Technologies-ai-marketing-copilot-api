@@ -9,3 +9,7 @@ class ContentStrategyCreate(BaseModel):
     content_pillars: str
     posting_frequency: str
     platforms: str
+
+
+class GenerateStrategyRequest(BaseModel):
+    brand_id: UUID
