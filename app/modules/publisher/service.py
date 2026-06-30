@@ -1,23 +1,26 @@
 from app.core.db.base_service import SPService
 from app.modules.social_publish.service import SocialPublishService
-
+from fastapi import HTTPException
 
 class PublisherService:
 
     @staticmethod
-    async def publish(session, calendar_id):
+    async def publish(session, workspace_id,calendar_id,):
 
         calendar = await SPService.one(
             session=session,
             procedure_name="sp_get_content_calendar",
             params={
+                "p_workspace_id":workspace_id,
                 "p_id": calendar_id
             }
         )
 
         if not calendar:
-            raise Exception("Calendar not found.")
-
+            raise HTTPException(
+                        status_code=404,
+                        detail="Calendar not found."
+                    )
         generated_content = await SPService.one(
             session=session,
             procedure_name="sp_get_generated_content",

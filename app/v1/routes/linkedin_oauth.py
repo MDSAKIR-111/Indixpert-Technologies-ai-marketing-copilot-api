@@ -33,9 +33,10 @@ async def connect_linkedin(
 async def linkedin_callback(
     code: str = Query(...),
     state: str = Query(...),
+    workspace_id=Depends(get_current_workspace),
     session=Depends(get_db)
 ):
-    result = await LinkedInOAuthService.handle_callback(session, code, state)
+    result = await LinkedInOAuthService.handle_callback(session, code, state,workspace_id)
 
     return {
         "message": "LinkedIn account connected successfully",

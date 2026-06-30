@@ -25,14 +25,16 @@ from app.v1.routes.publisher import (
 from app.v1.routes.linkedin_oauth import (
     router as linkedin_oauth_router
 )
-
-
+from app.v1.routes.dashboard import (
+    router as dashboard_router
+)
 
 
 api_router = APIRouter()
 
 
 api_router.include_router(auth_router)
+api_router.include_router(dashboard_router)
 api_router.include_router(workspaces_router)
 api_router.include_router(brands_router)
 api_router.include_router(brand_brain_router)
