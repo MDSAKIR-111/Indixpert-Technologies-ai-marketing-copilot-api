@@ -22,6 +22,10 @@ from app.v1.routes.social_accounts import (
 from app.v1.routes.publisher import (
     router as social_publish_router
 )
+from app.v1.routes.linkedin_oauth import (
+    router as linkedin_oauth_router
+)
+
 
 
 
@@ -43,3 +47,4 @@ api_router.include_router(
 )
 api_router.include_router(social_accounts_router)
 api_router.include_router(social_publish_router)
+api_router.include_router(linkedin_oauth_router)

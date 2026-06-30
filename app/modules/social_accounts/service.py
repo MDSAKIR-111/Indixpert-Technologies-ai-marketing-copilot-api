@@ -63,3 +63,16 @@ class SocialAccountService:
                 "p_id": social_account_id
             },
         )
+      
+    @staticmethod  
+    async def list(
+        session,
+        workspace_id,
+    ):
+        return await SPService.many(
+            session=session,
+            procedure_name="sp_list_social_accounts",
+            params={
+                "p_workspace_id": workspace_id
+            }
+        )

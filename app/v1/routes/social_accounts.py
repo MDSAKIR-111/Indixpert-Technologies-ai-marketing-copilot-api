@@ -35,6 +35,15 @@ async def get_social_account(
 ):
     return await SocialAccountService.get(session, workspace_id, social_account_id)
 
+@router.get("/")
+async def list_social_accounts(
+    workspace_id: UUID,
+    session=Depends(get_db)
+):
+    return await SocialAccountService.list(
+        session=session,
+        workspace_id=workspace_id
+    )
 
 @router.put("/{social_account_id}")
 async def update_social_account(

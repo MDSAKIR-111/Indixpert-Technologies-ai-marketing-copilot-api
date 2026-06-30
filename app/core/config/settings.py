@@ -19,7 +19,13 @@ class Settings(BaseSettings):
 
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
-    
+    # LinkedIn OAuth
+    LINKEDIN_CLIENT_ID: str
+
+    LINKEDIN_CLIENT_SECRET: str
+
+    LINKEDIN_REDIRECT_URI: str
+
     class Config:
         env_file = ".env"
 
