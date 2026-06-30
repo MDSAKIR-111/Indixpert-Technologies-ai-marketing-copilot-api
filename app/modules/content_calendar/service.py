@@ -4,7 +4,7 @@ from app.core.db.base_service import SPService
 class ContentCalendarService:
 
     @staticmethod
-    async def create(session, payload):
+    async def create(session,workspace_id, payload):
 
 
         content = await SPService.one(
@@ -27,12 +27,12 @@ class ContentCalendarService:
                 "p_title": content["content_type"],
                 "p_content_type": content["content_type"],
                 "p_platform": content["platform"],
-                "p_scheduled_datetime": payload.scheduled_datetime,
+                "p_scheduled_datetime": payload.scheduled_datetime.replace(tzinfo=None),
             },
         )
 
     @staticmethod
-    async def get(session, calendar_id):
+    async def get(session,workspace_id, calendar_id):
 
         return await SPService.one(
             session=session,
@@ -43,15 +43,18 @@ class ContentCalendarService:
         )
 
     @staticmethod
-    async def list(session):
+    async def list(session,workspace_id):
 
         return await SPService.many(
             session=session,
-            procedure_name="sp_list_content_calendar"
+            procedure_name="sp_list_content_calendar",
+            params={
+                "p_workspace_id": workspace_id
+            }
         )
 
     @staticmethod
-    async def update(session, calendar_id, payload):
+    async def update(session,workspace_id, calendar_id, payload):
 
         calendar = await SPService.one(
             session=session,
@@ -68,17 +71,18 @@ class ContentCalendarService:
             session=session,
             procedure_name="sp_update_content_calendar",
             params={
+            "p_workspace_id": workspace_id,
             "p_id": calendar_id,
             "p_title": calendar["title"],
             "p_content_type": calendar["content_type"],
             "p_platform": calendar["platform"],
-            "p_scheduled_datetime": payload.scheduled_datetime,
+            "p_scheduled_datetime": payload.scheduled_datetime.replace(tzinfo=None),
             "p_status": payload.status,
         },
     )
 
     @staticmethod
-    async def delete(session, calendar_id):
+    async def delete(session,workspace_id, calendar_id):
 
         return await SPService.write(
             session=session,

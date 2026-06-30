@@ -4,7 +4,7 @@ from app.core.db.base_service import SPService
 class ContextService:
 
     @staticmethod
-    async def get_brand_context(session, brand_id):
+    async def get_brand_context(session,workspace_id,brand_id):
 
         # Brand
         brand = await SPService.one(

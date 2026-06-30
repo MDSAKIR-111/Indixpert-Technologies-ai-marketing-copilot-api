@@ -15,17 +15,19 @@ router = APIRouter(
 @router.post("/")
 async def create_workspace_route(
     payload: WorkspaceCreate,
+    current_user=Depends(get_current_user),
     session=Depends(get_db),
 ):
+
     result = await create_workspace(
         session=session,
+        user_id=current_user["user_id"],
         workspace_name=payload.workspace_name,
-        email=payload.email,
-        full_name=payload.full_name,
     )
 
     return {
         "success": True,
+        "current_user": current_user,
         "data": result,
     }
 
@@ -35,3 +37,4 @@ async def me(
     current_user=Depends(get_current_user)
 ):
     return current_user
+

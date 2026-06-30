@@ -44,14 +44,15 @@ async def execute_sp_one(
         sp_name,
         params
     )
-
+    print(query)
+    print(params)
     result = await session.execute(
         query,
         params
     )
 
     row = result.mappings().first()
-
+    print("Row =", row)
     if not row:
         return None
 

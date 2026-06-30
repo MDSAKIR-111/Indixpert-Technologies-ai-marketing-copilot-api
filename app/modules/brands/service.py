@@ -20,12 +20,15 @@ async def create_brand(
 
 async def get_brand(
     session,
+    workspace_id,
     brand_id,
+    
 ):
     return await SPService.one(
         session=session,
         procedure_name="sp_get_brand",
         params={
+            "p_workspace_id": workspace_id,
             "p_brand_id": brand_id
         }
     )
@@ -46,6 +49,7 @@ async def get_brands(
 
 async def update_brand(
     session,
+    workspace_id,
     brand_id,
     payload,
 ):
@@ -53,6 +57,7 @@ async def update_brand(
         session=session,
         procedure_name="sp_update_brand",
         params={
+            "p_workspace_id": workspace_id,
             "p_brand_id": brand_id,
             "p_name": payload.name,
             "p_website": payload.website,
@@ -63,12 +68,14 @@ async def update_brand(
 
 async def delete_brand(
     session,
+    workspace_id,
     brand_id,
 ):
     return await SPService.write(
         session=session,
         procedure_name="sp_delete_brand",
         params={
+            "p_workspace_id": workspace_id,
             "p_brand_id": brand_id
         }
     )

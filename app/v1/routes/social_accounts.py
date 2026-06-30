@@ -2,7 +2,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 
 from app.core.db.dependencies import get_db
-
+from app.modules.auth.current_workspace import get_current_workspace
 from app.modules.social_accounts.schemas import (
     SocialAccountCreate,
     SocialAccountUpdate
@@ -21,27 +21,31 @@ router = APIRouter(
 @router.post("/")
 async def create_social_account(
     payload: SocialAccountCreate,
+    workspace_id=Depends(get_current_workspace),
     session=Depends(get_db)
 ):
-    return await SocialAccountService.create(session, payload)
+    return await SocialAccountService.create(session, workspace_id, payload)
 
 
 @router.get("/{social_account_id}")
 async def get_social_account(
     social_account_id: UUID,
+    workspace_id=Depends(get_current_workspace),
     session=Depends(get_db)
 ):
-    return await SocialAccountService.get(session, social_account_id)
+    return await SocialAccountService.get(session, workspace_id, social_account_id)
 
 
 @router.put("/{social_account_id}")
 async def update_social_account(
     social_account_id: UUID,
     payload: SocialAccountUpdate,
+    workspace_id=Depends(get_current_workspace),
     session=Depends(get_db)
 ):
     return await SocialAccountService.update(
         session,
+        workspace_id,
         social_account_id,
         payload
     )
@@ -50,9 +54,11 @@ async def update_social_account(
 @router.delete("/{social_account_id}")
 async def delete_social_account(
     social_account_id: UUID,
+    workspace_id=Depends(get_current_workspace),
     session=Depends(get_db)
 ):
     return await SocialAccountService.delete(
         session,
+        workspace_id,
         social_account_id
     )

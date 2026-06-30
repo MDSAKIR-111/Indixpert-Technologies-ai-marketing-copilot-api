@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class ContentGenerationAIService:
 
     @staticmethod
-    async def generate(session, payload):
+    async def generate(session,workspace_id,payload):
 
         logger.info("========== AI CONTENT GENERATION ==========")
 
@@ -23,6 +23,7 @@ class ContentGenerationAIService:
 
         context = await ContextService.get_brand_context(
             session,
+            workspace_id,
             payload.brand_id
         )
 
@@ -81,6 +82,7 @@ class ContentGenerationAIService:
     @staticmethod
     async def edit(
         session,
+        workspace_id,
         content_id,
         instruction,
     ):
@@ -97,6 +99,7 @@ class ContentGenerationAIService:
                 session=session,
                 procedure_name="sp_get_generated_content",
                 params={
+                   
                     "p_id": content_id
                 }
             )
@@ -112,6 +115,7 @@ class ContentGenerationAIService:
 
             context = await ContextService.get_brand_context(
                 session,
+                workspace_id,
                 content["brand_id"]
             )
 

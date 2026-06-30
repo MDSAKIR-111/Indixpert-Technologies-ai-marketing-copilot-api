@@ -28,18 +28,18 @@ from app.v1.routes.publisher import (
 api_router = APIRouter()
 
 
-api_router.include_router(workspaces_router)
 api_router.include_router(auth_router)
+api_router.include_router(workspaces_router)
 api_router.include_router(brands_router)
 api_router.include_router(brand_brain_router)
 api_router.include_router(
     content_strategy_router
 )
 api_router.include_router(
-    content_calendar_router
+    content_generation_router
 )
 api_router.include_router(
-    content_generation_router
+    content_calendar_router
 )
 api_router.include_router(social_accounts_router)
 api_router.include_router(social_publish_router)

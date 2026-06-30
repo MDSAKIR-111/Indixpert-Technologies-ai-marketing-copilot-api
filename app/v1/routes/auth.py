@@ -34,10 +34,3 @@ async def login(
         payload=payload,
     )
 
-
-@router.get("/health")
-async def health():
-    return {
-        "module": "Authentication",
-        "status": "working"
-    }
