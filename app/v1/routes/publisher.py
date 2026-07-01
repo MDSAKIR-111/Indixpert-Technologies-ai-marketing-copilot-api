@@ -23,3 +23,13 @@ async def publish(
         workspace_id=workspace_id,
         calendar_id=calendar_id,
     )
+
+@router.get("/logs")
+async def get_logs(
+    session=Depends(get_db),
+    workspace_id=Depends(get_current_workspace)
+):
+    return await PublisherService.get_logs(
+        session=session,
+        workspace_id=workspace_id,
+    )

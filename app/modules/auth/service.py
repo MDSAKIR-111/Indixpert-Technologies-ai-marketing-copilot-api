@@ -20,6 +20,7 @@ class AuthService:
             },
         )
 
+
         if existing_user:
             raise Exception("Email already registered.")
 

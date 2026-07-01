@@ -37,7 +37,7 @@ async def get_social_account(
 
 @router.get("/")
 async def list_social_accounts(
-    workspace_id: UUID,
+    workspace_id=Depends(get_current_workspace),
     session=Depends(get_db)
 ):
     return await SocialAccountService.list(

@@ -10,8 +10,7 @@ from app.modules.social_accounts.linkedin_oauth.client import LinkedInOAuthClien
 from app.modules.social_accounts.service import SocialAccountService
 from app.modules.social_accounts.schemas import SocialAccountCreate
 
-# NOTE: Production mein Redis use karna (settings.redis_url already hai),
-# abhi in-memory dict use kar rahe hain testing ke liye.
+
 _state_store: dict[str, dict] = {}
 
 

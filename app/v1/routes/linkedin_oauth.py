@@ -26,17 +26,16 @@ async def connect_linkedin(
         workspace_id=str(workspace_id),
         brand_id=str(brand_id),
     )
-    return RedirectResponse(url=auth_url)
+    return {"auth_url": auth_url}
 
 
 @router.get("/callback")
 async def linkedin_callback(
     code: str = Query(...),
     state: str = Query(...),
-    workspace_id=Depends(get_current_workspace),
     session=Depends(get_db)
 ):
-    result = await LinkedInOAuthService.handle_callback(session, code, state,workspace_id)
+    result = await LinkedInOAuthService.handle_callback(session, code, state)
 
     return {
         "message": "LinkedIn account connected successfully",
